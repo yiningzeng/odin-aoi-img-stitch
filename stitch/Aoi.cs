@@ -40,8 +40,8 @@ namespace stitch
         [DllImport("aoi.dll", EntryPoint = "marker_match", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern double marker_match(IntPtr iplImage, IntPtr patch, ref Point point, bool binarize = false, int method = 1);
 
-        [DllImport("aoi.dll", EntryPoint = "hello", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern int hello(IntPtr iplImage);
+        [DllImport("aoi.dll", EntryPoint = "crop", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern int crop(IntPtr iplImage, int edge =20);
 
         [DllImport("aoi.dll", EntryPoint = "copy_to", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern int copy_to(IntPtr iplImage, IntPtr patch, Rectangle rectangle);

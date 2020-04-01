@@ -59,6 +59,7 @@
             this.tbSavePath.Name = "tbSavePath";
             this.tbSavePath.Size = new System.Drawing.Size(535, 21);
             this.tbSavePath.TabIndex = 2;
+            this.tbSavePath.Text = "C:\\Users\\Administrator\\Desktop\\suomi-test-img";
             // 
             // label2
             // 

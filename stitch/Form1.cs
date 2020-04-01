@@ -120,9 +120,10 @@ namespace stitch
 
             Bitmap bitmap = oneSidePcb.bitmaps.Dequeue();
             Emgu.CV.Image<Bgr, Byte> currentFrame = new Emgu.CV.Image<Bgr, Byte>(bitmap);
-            Mat img = new Mat();
-            CvInvoke.BitwiseAnd(currentFrame, currentFrame, img);
-
+            Mat imgOld = new Mat();
+            CvInvoke.BitwiseAnd(currentFrame, currentFrame, imgOld);
+            int edge = 3;
+            Mat img = new Mat(imgOld, new Rectangle(new Point(edge,edge), new Size(imgOld.Width - edge *2, imgOld.Height -edge*2)));
             //第一行
             if (oneSidePcb.currentRow == 0)
             {
@@ -249,7 +250,6 @@ namespace stitch
             {
                 string directory = Path.GetDirectoryName(dialog.FileName);
            
-
                 for (int i = 0; i <=59; i++)
                 {
                     frontSidePcb.bitmaps.Enqueue(new Bitmap(Path.Combine(directory, "F" + i + ".jpg")));
@@ -258,22 +258,8 @@ namespace stitch
                 {
                     backSidePcb.bitmaps.Enqueue(new Bitmap(Path.Combine(directory, "B" + i + ".jpg")));
                 }
-                //for (int i = 29; i >= 15; i--)
-                //{
-                //    oneSidePcb.bitmaps.Enqueue(new Bitmap(Path.Combine(directory, "F" + i + ".jpg")));
-                //}
-                //for (int i = 30; i <= 44; i++)
-                //{
-                //    oneSidePcb.bitmaps.Enqueue(new Bitmap(Path.Combine(directory, "F" + i + ".jpg")));
-                //}
-                //for (int i = 59; i >= 45; i--)
-                //{
-                //    oneSidePcb.bitmaps.Enqueue(new Bitmap(Path.Combine(directory, "F" + i + ".jpg")));
-                //}
                 sw.Start();
                 //耗时程序
-
-                
                 for (int i = 0; i < 60; i++)
                 {
                     MySmartThreadPool.Instance().QueueWorkItem(() =>
@@ -291,9 +277,7 @@ namespace stitch
                         }
                     });
                 }
-
                 //copypic(Path.Combine(directory, "1Ftotal.jpg"));
-
                 //fileList.Clear();
                 //for (int i = 0; i < 60; i++)
                 //{
@@ -301,6 +285,12 @@ namespace stitch
                 //}
                 //copypic(fileList, Path.Combine(directory, "1Btotal.jpg"));
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Mat img = new Mat(@"C:\Users\Administrator\Desktop\suomi-test-img\764-Ng\B0.jpg", Emgu.CV.CvEnum.LoadImageType.AnyColor);
+            AoiAi.crop(img.Ptr, 100);
         }
     }
 }
